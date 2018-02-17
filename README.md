@@ -25,7 +25,13 @@ Execute this steps for launch Rodas in docker mode:
 
 2. Copy the `.env.example` file to `.env`, and complete the properties according your needs.  
  
-**Build images on your own**
+**Using Docker Cloud (RECOMMENDED AND FASTEST)**:
+
+In order to download images from Docker Cloud, execute:
+
+`$ docker-compose pull`
+
+**Build images on your own (NOT RECOMMENDED SLOWEST)**
 
 From inside our docker folder (e.g. *`rodas/docker`*):
 
@@ -68,6 +74,6 @@ docker-compose ps
 ```
 To enter some container, you can fetch the name from the previous command and execute the following:
 ```bash
-docker exec -it rodas /bin/bash
+docker exec -it rodas_containername /bin/bash
 ```
 - - - -

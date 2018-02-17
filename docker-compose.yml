@@ -5,6 +5,7 @@ services:
 ### Rodas - Workspace container ###
     web:
       container_name: rodas_webserver
+      image: agustinruatta/rodas-php:latest
       build: ./php
       env_file:
         - .env
@@ -28,6 +29,7 @@ services:
 ### PostgreSQL container ###
     postgres:
       container_name: rodas_postgres
+      image: agustinruatta/rodas-postgres:latest
       build: ./postgres
       env_file:
         - .env
@@ -45,6 +47,7 @@ services:
 ### Redis container ###
     redis:
       container_name: rodas_redis
+      image: agustinruatta/rodas-redis:latest
       build: ./redis
       env_file:
         - .env
