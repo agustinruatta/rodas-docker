@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+
+### Rodas - Workspace container ###
+    web:
+      container_name: rodas_webserver
+      build: ./php7.2
+      env_file:
+        - .env
+      volumes:
+        - "${RODAS_MY_HOST_DIR}:/var/www"
+        - "${SSH_AUTH_SOCK}:/ssh-agent" # Forward local machine SSH key to docker
+      depends_on:
+        - postgres
+        - redis
+      links:
+        - postgres
+        - redis
+      command: "/usr/bin/supervisord"
+      networks:
+        rodas_network:
+          ipv4_address: ${RODAS_WEB_IP}
+      environment:
+        SSH_AUTH_SOCK: /ssh-agent
+### Rodas - Workspace container ###
+
+### PostgreSQL container ###
+    postgres:
+      container_name: rodas_postgres
+      build: ./postgres
+      env_file:
+        - .env
+      volumes:
+        - "${PGDATA}:/var/lib/postgres"
+      environment:
+        POSTGRES_USER: "${POSTGRES_USER}"
+        POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+        POSTGRES_DATABASE: "${POSTGRES_DB}"
+      networks:
+        rodas_network:
+          ipv4_address: ${RODAS_POSTGRES_IP}
+### PostgreSQL container ###
+
+### Redis container ###
+    redis:
+      container_name: rodas_redis
+      build: ./redis
+      env_file:
+        - .env
+      volumes:
+        - "${REDIS_DATA_DIR}:/data"
+#      ports:
+#        - "6379:6379"
+      networks:
+        rodas_network:
+          ipv4_address: ${RODAS_REDIS_IP}
+### Redis container ###
+
+networks:
+    rodas_network:
+      ipam:
+        driver: default
+        config:
+          - subnet: ${RODAS_SUBNET}

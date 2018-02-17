@@ -1,0 +1,5 @@
+# Jetbrains config
+.idea
+
+# Environment config
+.env
