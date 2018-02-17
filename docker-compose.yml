@@ -5,7 +5,7 @@ services:
 ### Rodas - Workspace container ###
     web:
       container_name: rodas_webserver
-      build: ./php7.2
+      build: ./php
       env_file:
         - .env
       volumes:
