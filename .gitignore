@@ -3,3 +3,6 @@
 
 # Environment config
 .env
+
+# Containers data
+data/
